@@ -31,7 +31,7 @@ class CartItem extends React.Component {
                 <div className="left-block">
                     <img style={styles.image} />
                 </div>
-                <div className="right-block">
+              <div className="right-block">
                     <div style={{ fontSize: 25 }}>{title}</div>
                     <div style={{ color: "grey" }}>{price}</div>
                     <div style={{ color: "grey" }}>Qty:{qty}</div>
@@ -39,12 +39,12 @@ class CartItem extends React.Component {
                         <img alt="decrease"
                             className="action-icons"
                             src="https://www.flaticon.com/svg/static/icons/svg/992/992683.svg"
-                            onClick={this.decreaseQuantity}
+                            onClick={()=>this.props.onDecreaseQuantity(this.props.product)}
                         />
                         <img alt="increase"
                             className="action-icons"
                             src="https://www.flaticon.com/svg/static/icons/svg/992/992651.svg"
-                            onClick={this.increaseQuantity}
+                            onClick={()=>this.props.onIncreaseQuantity(this.props.product)}
                         />
 
                         <img alt="delete"
