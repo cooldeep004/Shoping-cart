@@ -1,5 +1,6 @@
 import React from 'react';
-class CartItem extends React.Component {
+const CartItem =(props)=> {
+    //converting class to function component
     /*constructor() {
         super();
         this.state = {
@@ -10,7 +11,7 @@ class CartItem extends React.Component {
         }
         //this.increaseQuantity = this.increaseQuantity.bind(this);
     }*/
-    decreaseQuantity = () => {
+    /*decreaseQuantity = () => {
         const{qty} =this.state;
         if(qty==0)
         return
@@ -23,9 +24,10 @@ class CartItem extends React.Component {
         this.setState  ({
             qty: this.state.qty + 1
         })
-    }
-    render() {
-        const { price, title, qty } = this.props.product;
+    }*/
+    
+        const { price, title, qty } = props.product;
+        const {onDecreaseQuantity , onIncreaseQuantity,onDelete,product } = props;
         return (
             <div className="cart-item">
                 <div className="left-block">
@@ -39,25 +41,25 @@ class CartItem extends React.Component {
                         <img alt="decrease"
                             className="action-icons"
                             src="https://www.flaticon.com/svg/static/icons/svg/992/992683.svg"
-                            onClick={()=>this.props.onDecreaseQuantity(this.props.product)}
+                            onClick={()=>onDecreaseQuantity(product)}
                         />
                         <img alt="increase"
                             className="action-icons"
                             src="https://www.flaticon.com/svg/static/icons/svg/992/992651.svg"
-                            onClick={()=>this.props.onIncreaseQuantity(this.props.product)}
+                            onClick={()=>onIncreaseQuantity(product)}
                         />
 
                         <img alt="delete"
                             className="action-icons"
                             src="https://t4.ftcdn.net/jpg/01/90/89/15/240_F_190891550_N7uKp2aHE3mOc20dmtDytj7atgvbhdOu.jpg"
-
+                            onClick={()=>onDelete(product.id)}
                         />
                     </div>
                 </div>
             </div>
         );
     }
-}
+
 
 const styles = {
     image: {

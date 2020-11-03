@@ -1,7 +1,7 @@
 import React from 'react';
 import CartItem from './CartItem'
-class Cart extends React.Component {
-
+const Cart=(props)=> {
+/*
     constructor() {
         super();
         this.state = {
@@ -55,19 +55,29 @@ class Cart extends React.Component {
         }
        
     }
-    render() {
-const {products}=this.state;
+    handleDelete=(id)=>
+    {
+        const {products} = this.state;
+        const items= products.filter((item)=> item.id!==id);
+        this.setState({
+            products: items
+        })
+    }
+    */
+     const products=props.product;
         return (
             <div className="cart">
             {products.map((product)=>{
-                return <CartItem product={product} key={product.id} onIncreaseQuantity={this.handleIncreaseQuantity}
-                onDecreaseQuantity={this.handleDecreaseQuantity}
+                return <CartItem product={product} key={product.id} 
+                onIncreaseQuantity={props.onIncreaseQuantity}
+                onDecreaseQuantity={props.onDecreaseQuantity}
+                onDelete={props.onDelete}
                 />
             })}
             </div>
 
         );
-    }
+    
 }
 
 
