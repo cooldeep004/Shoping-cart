@@ -2,7 +2,7 @@ import React from 'react';
 import Cart from './Cart'
 import Navbar from './navbar'
 import './App.css';
-
+import firebase from 'firebase';
 class App extends React.Component {
 
 
@@ -10,31 +10,53 @@ class App extends React.Component {
     super();
     this.state = {
       products: [
-        {
-          price: 99,
-          title: 'watch',
-          qty: 1,
-          img: '',
-          id: 1
-        },
-        {
-          price: 999,
-          title: 'Phone',
-          qty: 10,
-          img: '',
-          id: 2
-        },
-        {
-          price: 9999,
-          title: 'laptop',
-          qty: 18,
-          img: '',
-          id: 3
-        }
-      ]
+      ],
+      loading :true
     }
   }
+componentDidMount()
+{
+  firebase
+  .firestore()
+  .collection('products')
+  .onSnapshot((snapshot) =>{ // on snapshot reflect real time chnages
+    console.log(snapshot);
 
+    snapshot.docs.map((doc) =>{
+      console.log(doc.data())
+    });
+    const products = snapshot.docs.map((doc) =>{
+      const data=doc.data();
+      data['id']=doc.id;
+      return data;
+    })
+this.setState({
+
+  products,      //equavilent to products: products
+  loading: false
+})
+
+  })
+  /*.get()
+  .then((snapshot) =>{
+    console.log(snapshot);
+
+    snapshot.docs.map((doc) =>{
+      console.log(doc.data())
+    });
+    const products = snapshot.docs.map((doc) =>{
+      const data=doc.data();
+      data['id']=doc.id;
+      return data;
+    })
+this.setState({
+
+  products,      //equavilent to products: products
+  loading: false
+})
+
+  })*/
+}
     handleIncreaseQuantity = (product) => {
       const { products } = this.state;
       const index = products.indexOf(product);
@@ -90,7 +112,7 @@ class App extends React.Component {
     }
     render(){
 
-      const {products}=this.state;
+      const {products , loading}=this.state;
       return (
         <div className="App">
           <Navbar  count={this.getcount()}/>
@@ -99,6 +121,7 @@ class App extends React.Component {
           onIncreaseQuantity={this.handleIncreaseQuantity}
           onDecreaseQuantity={this.handleDecreaseQuantity}
           onDelete={this.handleDelete}/>
+          {loading && <h1>LoADING PRODUCTS....</h1>}
           <div style={{ backgroundColor: 'blue', padding: 10, color: 'white', fontSize: 25 }}>
           TOTAL: {this.getCartTotal()}
         </div>

@@ -3,6 +3,16 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 
+import  firebase from 'firebase';
+import 'firebase/firestore';
+
+const firebaseConfig = {
+  // add your project setting 
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+
+
 ReactDOM.render(
   <React.StrictMode>
     <App />
