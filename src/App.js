@@ -60,16 +60,30 @@ this.setState({
     handleIncreaseQuantity = (product) => {
       const { products } = this.state;
       const index = products.indexOf(product);
-      products[index].qty += 1;
+
+     /* products[index].qty += 1;
       this.setState(
         {
           products: products
         }
-      )
+      )*/
+      const docRef = firebase.firestore().collection('products').doc(products[index].id);
+      docRef.update({
+        qty:products[index].qty+1
+      })
+    .then(()=>{
+
+      console.log('updated successfully');
+    }).catch((error)=>
+    {
+      
+      console.log('error' , error);
+    })
     }
     handleDecreaseQuantity = (product) => {
       const { products } = this.state;
       const index = products.indexOf(product);
+      /*
       if (products[index].qty != 0) {
         products[index].qty -= 1;
         this.setState(
@@ -77,15 +91,38 @@ this.setState({
             products: products
           }
         )
-      }
+      }*/
+      const docRef = firebase.firestore().collection('products').doc(products[index].id);
+      docRef.update({
+        qty:products[index].qty-1
+      })
+    .then(()=>{
+
+      console.log('updated successfully');
+    }).catch((error)=>
+    {
+      
+      console.log('error' , error);
+    })
 
     }
     handleDelete = (id) => {
       const { products } = this.state;
-      const items = products.filter((item) => item.id !== id);
+     /* const items = products.filter((item) => item.id !== id);
+      
       this.setState({
         products: items
+      })*/
+      const docRef = firebase.firestore().collection('products').doc(id);
+      docRef.delete().then(()=>{
+
+        console.log('updated successfully');
+      }).catch((error)=>
+      {
+        
+        console.log('error' , error);
       })
+     
     }
     getcount= ()=>
     {
@@ -110,12 +147,33 @@ this.setState({
       return count;
 
     }
+
+    addProduct=()=>
+    {
+      firebase
+      .firestore()
+      .collection('products')
+      .add({
+        img:'',
+        price:900,
+        qty:4,
+        title:'washing machine'
+      })
+      .then((docRef)=>{
+        console.log(docRef);
+      })
+      .catch((error)=>
+      {
+        console.log(error);
+      })
+    }
     render(){
 
       const {products , loading}=this.state;
       return (
         <div className="App">
           <Navbar  count={this.getcount()}/>
+          <button onClick={this.addProduct}>add products</button>
           <Cart 
           product={products} key={products.id} 
           onIncreaseQuantity={this.handleIncreaseQuantity}
