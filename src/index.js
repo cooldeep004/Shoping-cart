@@ -7,8 +7,7 @@ import  firebase from 'firebase';
 import 'firebase/firestore';
 
 const firebaseConfig = {
-  //enter your config of firebase with a collection name as products
-//have field title ,price, qty, img 
+  //copy paste your config from fire base.......
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
